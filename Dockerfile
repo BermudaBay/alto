@@ -3,9 +3,7 @@ FROM ghcr.io/foundry-rs/foundry:v1.1.0 AS builder
 
 WORKDIR /build
 
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml* .gitmodules ./
-
-COPY contracts ./contracts
+COPY . .
 
 # --- FIX: Switch to root user to install packages ---
 USER root
@@ -18,7 +16,10 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     corepack enable
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
+
+RUN git config --global --add safe.directory /build
+RUN git submodule update --init --recursive
 
 RUN pnpm run build:contracts
 
@@ -41,7 +42,7 @@ COPY --from=builder /build/src/contracts ./src/contracts
 
 RUN pnpm fetch
 
-RUN pnpm install -r --offline --frozen-lockfile
+RUN pnpm install -r
 
 RUN pnpm build
 
