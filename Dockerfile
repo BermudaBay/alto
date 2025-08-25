@@ -18,8 +18,9 @@ RUN apt-get update && \
 
 RUN pnpm install
 
-RUN git config --global --add safe.directory /build
-RUN git submodule update --init --recursive
+# Note: Uncomment the following lines if you build a standalone Docker container.
+# RUN git config --global --add safe.directory /build
+# RUN git submodule update --init --recursive
 
 RUN pnpm run build:contracts
 
