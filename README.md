@@ -10,6 +10,16 @@ Alto is a Typescript implementation of the [ERC-4337 bundler specification](http
 
 For a full explanation of Alto, please visit our [docs page](https://docs.pimlico.io/infra/bundler)
 
+#### Building a Docker container
+
+Before building a Docker container via you must ensure that the git submodules are up to date.
+
+```bash
+git submodule update --init --recursive
+```
+
+If you still run into problems you can check the [Dockerfile](./Dockerfile). In it you'll find a comment that asks you to uncomment a few lines when building a standalone Docker container.
+
 #### Run an instance of Alto with the following commands:
 ```bash
 pnpm install
